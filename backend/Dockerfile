@@ -18,7 +18,7 @@ FROM node:20-alpine3.22 AS production
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Install dumb-init
-RUN apk add --no-cache dumb-init=<AVAILABLE_VERSION>
+RUN apk add --no-cache dumb-init=1.2.5-r3
 
 WORKDIR /app
 
@@ -41,3 +41,4 @@ ENTRYPOINT ["dumb-init", "--"]
 
 # Start backend
 CMD ["node", "src/index.js"]
+
