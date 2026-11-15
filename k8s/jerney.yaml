@@ -223,7 +223,7 @@ spec:
 
       containers:
         - name: backend
-          image: ghcr.io/mohamedsaabith342/jerney-backend:latest
+          image: ghcr.io/MohamedSaabith342/jerney/jerney-backend:c76a17d
           imagePullPolicy: Always
 
           ports:
@@ -353,7 +353,7 @@ spec:
 
       containers:
         - name: frontend
-          image: ghcr.io/mohamedsaabith342/jerney-frontend:latest
+          image: ghcr.io/MohamedSaabith342/jerney/jerney-frontend:c76a17d
           imagePullPolicy: Always
 
           ports:
