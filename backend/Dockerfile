@@ -1,6 +1,6 @@
 
 # ---- Build stage ----
-FROM node:20-alpine AS build
+FROM node:20-alpine3.22 AS build
 
 WORKDIR /app
 
@@ -12,13 +12,13 @@ RUN npm ci --omit=dev && npm cache clean --force
 
 
 # ---- Production stage ----
-FROM node:20-alpine AS production
+FROM node:20-alpine3.22 AS production
 
 # Create non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Install dumb-init
-RUN apk --no-cache add dumb-init
+RUN apk add --no-cache dumb-init=<AVAILABLE_VERSION>
 
 WORKDIR /app
 

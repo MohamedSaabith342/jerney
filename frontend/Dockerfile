@@ -1,5 +1,5 @@
 # ---- Build stage ----
-FROM node:22-alpine AS build
+FROM node:20-alpine3.22 AS build
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # ---- Production stage ----
-FROM nginx:1.27-alpine AS production
+FROM nginx:stable-alpine3.24 AS production
 
 # Remove default Nginx configuration and website
 RUN rm -rf /etc/nginx/conf.d/default.conf \
