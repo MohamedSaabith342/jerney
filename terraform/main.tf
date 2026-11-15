@@ -10,6 +10,11 @@ data "aws_availability_zones" "available" {
     name   = "opt-in-status"
     values = ["opt-in-not-required"]
   }
+
+  filter {
+    name   = "zone-id"
+    values = ["aps1-az1", "aps1-az3", "aps1-az2"]
+  }
 }
 
 locals {
