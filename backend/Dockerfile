@@ -16,7 +16,7 @@ FROM node:24-alpine3.24 AS production
 
 # Upgrade Alpine packages and install dumb-init
 RUN apk upgrade --no-cache && \
-    apk add --no-cache dumb-init
+    apk add --no-cache dumb-init=1.2.5-r4
 
 # Remove npm because it is not required at runtime
 RUN rm -rf /usr/local/lib/node_modules/npm \
