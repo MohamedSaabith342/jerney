@@ -19,6 +19,9 @@ RUN npm run build
 # ---- Production stage ----
 FROM nginx:stable-alpine3.24 AS production
 
+# Upgrade installed Alpine packages
+RUN apk update && apk upgrade --no-cache
+
 # Remove default Nginx configuration and website
 RUN rm -rf /etc/nginx/conf.d/default.conf \
     /usr/share/nginx/html/*
