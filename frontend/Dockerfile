@@ -1,32 +1,44 @@
 # ---- Build stage ----
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
+
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci && npm cache clean --force
+
+# Copy dependency files
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy frontend source code
 COPY . .
+
+# Build production frontend
 RUN npm run build
+
 
 # ---- Production stage ----
 FROM nginx:1.27-alpine AS production
 
-# Security: remove default nginx config
-RUN rm -rf /etc/nginx/conf.d/default.conf /usr/share/nginx/html/*
+# Remove default Nginx configuration and website
+RUN rm -rf /etc/nginx/conf.d/default.conf \
+    /usr/share/nginx/html/*
 
-# Copy custom nginx config
+# Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy built frontend from build stage
+# Copy compiled frontend files
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Security: run nginx as non-root
+# Prepare permissions for non-root Nginx
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
     touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid
+    chown nginx:nginx /var/run/nginx.pid
 
+# Run as non-root
 USER nginx
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
