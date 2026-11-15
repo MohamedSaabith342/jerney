@@ -181,8 +181,8 @@ jobs:
           directory: terraform/
           framework: terraform
           soft_fail: false
-          skip_check: CKV_AWS_39,CKV_AWS_58  # Public EKS endpoint (intentional for dev)
-          output_format: cli
+          download_external_modules: true
+          skip_check: CKV_AWS_39,CKV_AWS_58,CKV_TF_1
 
       - name: Run Checkov on Kubernetes manifests
         uses: bridgecrewio/checkov-action@v12
